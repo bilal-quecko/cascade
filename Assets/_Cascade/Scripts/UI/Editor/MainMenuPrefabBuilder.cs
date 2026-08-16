@@ -11,9 +11,12 @@ using UnityEngine.UI;
 namespace Cascade.EditorTools
 {
     /// <summary>
-    /// Creates an editable Main Menu prefab and installs it into SCN_MainMenu.
-    /// Run from Cascade > UI > Rebuild Main Menu Prefab & Scene.
-    /// The builder also runs once automatically if the prefab does not exist.
+    /// One-time/bootstrap editor utility for creating the editable Main Menu prefab
+    /// and installing it into SCN_MainMenu.
+    ///
+    /// The prefab is NEVER regenerated automatically. Once designers begin editing
+    /// PF_MainMenu.prefab, those manual changes remain safe unless a developer
+    /// explicitly chooses the destructive rebuild command and confirms it.
     /// </summary>
     public static class MainMenuPrefabBuilder
     {
@@ -21,33 +24,90 @@ namespace Cascade.EditorTools
         private const string ScenePath = "Assets/_Cascade/Scenes/SCN_MainMenu.unity";
         private const string GeneratedRootName = "PF_MainMenu";
 
-        [InitializeOnLoadMethod]
-        private static void AutoCreateIfMissing()
+        [MenuItem("Cascade/UI/Main Menu/Create & Install Prefab", priority = 100)]
+        public static void CreateAndInstall()
         {
-            EditorApplication.delayCall += () =>
+            GameObject existingPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            if (existingPrefab != null)
             {
-                if (EditorApplication.isPlayingOrWillChangePlaymode)
+                bool installExisting = EditorUtility.DisplayDialog(
+                    "Cascade Main Menu",
+                    "PF_MainMenu.prefab already exists. Its visual design will NOT be rebuilt.\n\nInstall the existing prefab into SCN_MainMenu?",
+                    "Install Existing",
+                    "Cancel");
+
+                if (!installExisting)
                     return;
 
-                if (AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) == null)
-                    BuildAndInstall();
-            };
+                InstallPrefabInScene();
+                Debug.Log($"[Cascade] Existing Main Menu prefab installed in SCN_MainMenu: '{PrefabPath}'.");
+                return;
+            }
+
+            BuildPrefabAsset();
+            InstallPrefabInScene();
+            Debug.Log($"[Cascade] Main Menu prefab created at '{PrefabPath}' and installed in SCN_MainMenu.");
         }
 
-        [MenuItem("Cascade/UI/Rebuild Main Menu Prefab & Scene")]
-        public static void BuildAndInstall()
+        [MenuItem("Cascade/UI/Main Menu/Install Existing Prefab In Scene", priority = 110)]
+        public static void InstallExistingPrefab()
+        {
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) == null)
+            {
+                EditorUtility.DisplayDialog(
+                    "Cascade Main Menu",
+                    "PF_MainMenu.prefab does not exist yet. Run 'Create & Install Prefab' first.",
+                    "OK");
+                return;
+            }
+
+            InstallPrefabInScene();
+            Debug.Log("[Cascade] Main Menu scene refreshed from the existing editable prefab.");
+        }
+
+        [MenuItem("Cascade/UI/Main Menu/DESTRUCTIVE - Rebuild Prefab From Template", priority = 200)]
+        public static void RebuildFromTemplate()
+        {
+            bool confirmed = EditorUtility.DisplayDialog(
+                "Rebuild Main Menu Prefab?",
+                "WARNING: This replaces PF_MainMenu.prefab with the generated template and will overwrite manual UI layout/style changes made to that prefab.\n\nContinue only if you intentionally want to reset the Main Menu UI.",
+                "Rebuild & Overwrite",
+                "Cancel");
+
+            if (!confirmed)
+                return;
+
+            BuildPrefabAsset();
+            InstallPrefabInScene();
+            Debug.LogWarning("[Cascade] PF_MainMenu.prefab was intentionally rebuilt from the template.");
+        }
+
+        [MenuItem("Cascade/UI/Main Menu/Open Prefab", priority = 120)]
+        public static void OpenPrefab()
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            if (prefab == null)
+            {
+                EditorUtility.DisplayDialog(
+                    "Cascade Main Menu",
+                    "PF_MainMenu.prefab does not exist yet. Run 'Create & Install Prefab' first.",
+                    "OK");
+                return;
+            }
+
+            AssetDatabase.OpenAsset(prefab);
+        }
+
+        private static void BuildPrefabAsset()
         {
             EnsureDirectory(Path.GetDirectoryName(PrefabPath));
 
             GameObject root = BuildPrefabHierarchy();
             PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
+
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-
-            InstallPrefabInScene();
-
-            Debug.Log($"[Cascade] Main Menu prefab rebuilt at '{PrefabPath}' and installed in SCN_MainMenu.");
         }
 
         private static GameObject BuildPrefabHierarchy()
@@ -140,6 +200,12 @@ namespace Cascade.EditorTools
             }
 
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            if (prefab == null)
+            {
+                Debug.LogError($"[Cascade] Cannot install Main Menu. Prefab not found at '{PrefabPath}'.");
+                return;
+            }
+
             PrefabUtility.InstantiatePrefab(prefab, scene);
 
             if (Object.FindFirstObjectByType<EventSystem>() == null)
@@ -164,7 +230,9 @@ namespace Cascade.EditorTools
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image));
             go.transform.SetParent(parent, false);
-            if (stretch) Stretch(go.GetComponent<RectTransform>());
+            if (stretch)
+                Stretch(go.GetComponent<RectTransform>());
+
             var image = go.GetComponent<Image>();
             image.color = color;
             return image;
