@@ -16,6 +16,7 @@ namespace Cascade.UI
         private GameObject _worldPanel;
         private GameObject _settingsPanel;
         private GameObject _collectionPanel;
+        private Font _runtimeFont;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Bootstrap()
@@ -32,6 +33,7 @@ namespace Cascade.UI
 
         private void Awake()
         {
+            _runtimeFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             EnsureEventSystem();
             BuildMenu();
         }
@@ -161,7 +163,7 @@ namespace Cascade.UI
             var text = textObject.GetComponent<Text>();
             text.text = label;
             text.alignment = TextAnchor.MiddleCenter;
-            text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = _runtimeFont;
             text.fontSize = primary ? 38 : 30;
             text.fontStyle = FontStyle.Bold;
             text.color = Color.white;
@@ -180,7 +182,7 @@ namespace Cascade.UI
             var text = textObject.GetComponent<Text>();
             text.text = value;
             text.alignment = TextAnchor.MiddleCenter;
-            text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = _runtimeFont;
             text.fontSize = fontSize;
             text.fontStyle = style;
             text.color = Color.white;
