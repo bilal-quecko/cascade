@@ -20,8 +20,11 @@ namespace Cascade.Core
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (collision.gameObject.name == "Ground" || collision.gameObject.name.Contains("Boundary")) return;
+
             float impulse = collision.impulse.magnitude;
             if (impulse < minimumImpulse) return;
+
             string id = kind switch
             {
                 ImpactEventKind.Crate => "crate.hit",
@@ -29,6 +32,7 @@ namespace Cascade.Core
                 ImpactEventKind.Boulder => "boulder.hit",
                 _ => "impact"
             };
+
             Vector3 point = collision.contactCount > 0 ? collision.GetContact(0).point : transform.position;
             _bus?.Publish(id, gameObject, collision.gameObject, point, impulse);
         }
