@@ -27,11 +27,21 @@ namespace Cascade.Simulation
         {
             _rigidbodies = binder.GetRuntimeRigidbodies();
             SetSimulationArmed(false);
+
+            // LevelManager now broadcasts LevelLoaded after entering Observation,
+            // so the normal opening flow can safely continue to Preparation.
+            EnterPreparation();
         }
 
         public void EnterPreparation()
         {
-            gameStateManager?.TrySetState(GameState.Preparation);
+            if (gameStateManager == null)
+                return;
+
+            if (gameStateManager.CurrentState == GameState.Preparation)
+                return;
+
+            gameStateManager.TrySetState(GameState.Preparation);
         }
 
         public void StartCascade()
@@ -54,7 +64,9 @@ namespace Cascade.Simulation
             foreach (var body in _rigidbodies)
             {
                 if (body == null) continue;
+
                 body.isKinematic = !armed;
+
                 if (!armed)
                 {
                     body.linearVelocity = Vector3.zero;
