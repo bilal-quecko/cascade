@@ -46,7 +46,6 @@ namespace Cascade.CameraSystem
             if (_binder == null) return;
             _target = next switch
             {
-                GameState.Simulation => _binder.simulationInterestRoot != null ? _binder.simulationInterestRoot : _binder.observationAnchor,
                 GameState.Result => _binder.resultAnchor != null ? _binder.resultAnchor : _binder.observationAnchor,
                 _ => _binder.observationAnchor != null ? _binder.observationAnchor : _binder.transform
             };
