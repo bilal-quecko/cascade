@@ -23,38 +23,72 @@ namespace Cascade.UI
 
         private void Awake()
         {
-            if (startCascadeButton != null) startCascadeButton.onClick.AddListener(StartCascade);
-            if (replayButton != null) replayButton.onClick.AddListener(() => levelManager?.ReplayCurrent());
-            if (menuButton != null) menuButton.onClick.AddListener(SceneNavigator.LoadMainMenu);
+            if (startCascadeButton != null)
+                startCascadeButton.onClick.AddListener(StartCascade);
+
+            if (replayButton != null)
+                replayButton.onClick.AddListener(() => levelManager?.ReplayCurrent());
+
+            if (menuButton != null)
+                menuButton.onClick.AddListener(SceneNavigator.LoadMainMenu);
         }
 
         private void OnEnable()
         {
-            if (levelManager != null) levelManager.LevelLoaded += OnLevelLoaded;
-            if (gameStateManager != null) gameStateManager.StateChanged += OnStateChanged;
+            if (levelManager != null)
+                levelManager.LevelLoaded += OnLevelLoaded;
+
+            if (gameStateManager != null)
+            {
+                gameStateManager.StateChanged += OnStateChanged;
+                ApplyState(gameStateManager.CurrentState);
+            }
         }
 
         private void OnDisable()
         {
-            if (levelManager != null) levelManager.LevelLoaded -= OnLevelLoaded;
-            if (gameStateManager != null) gameStateManager.StateChanged -= OnStateChanged;
+            if (levelManager != null)
+                levelManager.LevelLoaded -= OnLevelLoaded;
+
+            if (gameStateManager != null)
+                gameStateManager.StateChanged -= OnStateChanged;
         }
 
         private void OnLevelLoaded(LevelRuntimeBinder _)
         {
-            var definition = levelManager.CurrentDefinition;
-            if (definition == null) return;
-            if (levelText != null) levelText.text = $"{definition.sequenceIndex:00}  {definition.displayName}";
-            if (objectiveText != null) objectiveText.text = definition.primaryObjective;
-            simulationController?.EnterPreparation();
+            var definition = levelManager != null ? levelManager.CurrentDefinition : null;
+            if (definition == null)
+                return;
+
+            if (levelText != null)
+                levelText.text = $"{definition.sequenceIndex:00}  {definition.displayName}";
+
+            if (objectiveText != null)
+                objectiveText.text = definition.primaryObjective;
+
+            // Do not drive gameplay state from the HUD. SimulationController owns
+            // Observation -> Preparation. The HUD only reflects the current state.
+            if (gameStateManager != null)
+                ApplyState(gameStateManager.CurrentState);
         }
 
         private void OnStateChanged(GameState _, GameState next)
         {
-            if (preparationControls != null) preparationControls.SetActive(next == GameState.Preparation);
-            if (resultPanel != null) resultPanel.SetActive(next == GameState.Result);
+            ApplyState(next);
         }
 
-        private void StartCascade() => simulationController?.StartCascade();
+        private void ApplyState(GameState state)
+        {
+            if (preparationControls != null)
+                preparationControls.SetActive(state == GameState.Preparation);
+
+            if (resultPanel != null)
+                resultPanel.SetActive(state == GameState.Result);
+        }
+
+        private void StartCascade()
+        {
+            simulationController?.StartCascade();
+        }
     }
 }
