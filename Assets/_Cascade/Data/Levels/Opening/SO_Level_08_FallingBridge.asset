@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c584dc1a3e70a849a7f26d4527fe8a4, type: 3}
+  m_Name: SO_Level_08_FallingBridge
+  m_EditorClassIdentifier: Assembly-CSharp::Cascade.Levels.LevelDefinitionSO
+  levelId: L08
+  displayName: Falling Bridge
+  sequenceIndex: 8
+  worldId: opening
+  levelPrefab:
+    m_AssetGUID: 266f56d582d6e6a479b700b8a5c4fd77
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  puzzleCategories: 16
+  primaryObjective: Destroy the tower below the bridge.
+  teaching: Multiple entry routes with a hidden bridge/water secondary chain.
+  toolSummary: Ramp + Weight
+  targetCascade: Boulder -> cart -> boxes -> hammer -> bridge -> tower -> waterwheel
+    secondary structure.
+  maxToolsUsable: 2
+  nextLevelId: L09
+  productionReady: 0

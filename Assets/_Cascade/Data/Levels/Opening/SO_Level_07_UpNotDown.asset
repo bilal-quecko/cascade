@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c584dc1a3e70a849a7f26d4527fe8a4, type: 3}
+  m_Name: SO_Level_07_UpNotDown
+  m_EditorClassIdentifier: Assembly-CSharp::Cascade.Levels.LevelDefinitionSO
+  levelId: L07
+  displayName: Up, Not Down
+  sequenceIndex: 7
+  worldId: opening
+  levelPrefab:
+    m_AssetGUID: cdb8035095c75484a8e92b32d8567190
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  puzzleCategories: 3
+  primaryObjective: Destroy the tower.
+  teaching: Cascades can travel upward before dropping force back down.
+  toolSummary: Spring + Movable Crate
+  targetCascade: Ball -> spring -> tether release -> weight drop -> boulder -> tower.
+  maxToolsUsable: 2
+  nextLevelId: L08
+  productionReady: 0

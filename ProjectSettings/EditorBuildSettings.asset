@@ -17,5 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Cascade/Scenes/SCN_Sanctuary.unity
     guid: 52eabe132bccbb24f9a58b8b55649bbe
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 5d7a10c61f0691a4d88c77dcab1de81c, type: 2}
   m_UseUCBPForAssetBundles: 0

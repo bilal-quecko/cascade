@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: e3e6418bd2513f4469a31b34dd0f574b
+  m_SerializeEntries:
+  - m_GUID: 0cb7728e30246ba47bb780f12dffe83f
+    m_Address: levels/opening/L10_TheClockTower
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 266f56d582d6e6a479b700b8a5c4fd77
+    m_Address: levels/opening/L08_FallingBridge
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d9e6a9ee022d6843a3afa5adc714056
+    m_Address: levels/opening/L06_FloodRoute
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 574822fb1e3ff6b4094b535d412f116c
+    m_Address: levels/opening/L04_KnockKnock
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72e253205ecdcc749a8f067af4a52a4d
+    m_Address: levels/opening/L09_TwoBirds
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91ee5ac619fb58842a047847da92a75d
+    m_Address: levels/opening/L05_WeakestLink
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6320966d3229c742912aea4d371ca30
+    m_Address: levels/opening/L01_TheFirstPush
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdb8035095c75484a8e92b32d8567190
+    m_Address: levels/opening/L07_UpNotDown
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3f1cf4d6d487c441bb131c9ca6ba906
+    m_Address: levels/opening/L03_SwingIntoAction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4b9d53456d3feb40bfff9bea65515ab
+    m_Address: levels/opening/L02_HeavyDelivery
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level_opening_01_10
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 534882c4017899a459941d6ba1d2e345, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 95308d8316bfb274d9a5f9488ac858cc, type: 2}
+    - {fileID: 11400000, guid: 4cca117e38398ce409e336053963eaf6, type: 2}

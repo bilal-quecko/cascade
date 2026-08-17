@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c584dc1a3e70a849a7f26d4527fe8a4, type: 3}
+  m_Name: SO_Level_05_WeakestLink
+  m_EditorClassIdentifier: Assembly-CSharp::Cascade.Levels.LevelDefinitionSO
+  levelId: L05
+  displayName: Weakest Link
+  sequenceIndex: 5
+  worldId: opening
+  levelPrefab:
+    m_AssetGUID: 91ee5ac619fb58842a047847da92a75d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  puzzleCategories: 2
+  primaryObjective: Collapse the bridge.
+  teaching: Attack the structural dependency, not necessarily the obvious target.
+  toolSummary: Impact Weight / Wrecking Ball
+  targetCascade: Impact support -> bridge folds -> cart falls -> dam lever/water
+    release.
+  maxToolsUsable: 1
+  nextLevelId: L06
+  productionReady: 0
