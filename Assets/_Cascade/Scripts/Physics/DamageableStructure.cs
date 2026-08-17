@@ -38,9 +38,12 @@ namespace Cascade.Core
         {
             _health = maxHealth;
             _collapsed = false;
+
             foreach (Rigidbody rb in _pieces)
             {
-                if (rb == null) continue;
+                if (rb == null)
+                    continue;
+
                 rb.isKinematic = true;
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
@@ -50,7 +53,9 @@ namespace Cascade.Core
 
         public void ApplyImpact(float impulse, GameObject source, Vector3 point)
         {
-            if (_collapsed || impulse < minimumDamageImpulse) return;
+            if (_collapsed || impulse < minimumDamageImpulse)
+                return;
+
             float damage = impulse * damagePerImpulse;
             _health = Mathf.Max(0f, _health - damage);
             _bus?.Publish(damagedEventId, source, gameObject, point, damage);
@@ -61,31 +66,21 @@ namespace Cascade.Core
 
         public void Collapse(GameObject source, Vector3 point)
         {
-            if (_collapsed) return;
+            if (_collapsed)
+                return;
+
             _collapsed = true;
+
             foreach (Rigidbody rb in _pieces)
             {
-                if (rb == null) continue;
+                if (rb == null)
+                    continue;
+
                 rb.isKinematic = false;
                 rb.WakeUp();
             }
+
             _bus?.Publish(destroyedEventId, source, gameObject, point, 1f);
-        }
-    }
-
-    public sealed class DamageablePiece : MonoBehaviour
-    {
-        [SerializeField] private float impulseMultiplier = 1f;
-        private DamageableStructure _structure;
-
-        private void Awake() => _structure = GetComponentInParent<DamageableStructure>();
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (_structure == null) return;
-            float impulse = collision.impulse.magnitude * impulseMultiplier;
-            Vector3 point = collision.contactCount > 0 ? collision.GetContact(0).point : transform.position;
-            _structure.ApplyImpact(impulse, collision.gameObject, point);
         }
     }
 }
