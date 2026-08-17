@@ -1,4 +1,5 @@
 using Cascade.Core;
+using Cascade.Levels;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,10 +43,16 @@ namespace Cascade.UI
             Bind(sanctuaryButton, SceneNavigator.LoadSanctuary);
             Bind(collectionButton, ShowCollection);
             Bind(settingsButton, ShowSettings);
-            Bind(levelOneButton, SceneNavigator.LoadGameplay);
+            Bind(levelOneButton, () => LoadLevel("L01"));
             Bind(worldBackButton, ShowMainMenu);
             Bind(settingsBackButton, ShowMainMenu);
             Bind(collectionBackButton, ShowMainMenu);
+        }
+
+        private static void LoadLevel(string levelId)
+        {
+            LevelSelection.Select(levelId);
+            SceneNavigator.LoadGameplay();
         }
 
         private static void Bind(Button button, UnityEngine.Events.UnityAction action)
