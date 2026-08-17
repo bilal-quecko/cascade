@@ -65,8 +65,12 @@ namespace Cascade.Levels
                 return;
             }
 
-            LevelLoaded?.Invoke(CurrentBinder);
+            // A loaded level is first considered observable. Subscribers may then
+            // advance it into Preparation (for example after an intro camera pass).
+            // This ordering is important: Loading -> Preparation is intentionally
+            // invalid in GameStateManager.
             gameStateManager?.TrySetState(GameState.Observation);
+            LevelLoaded?.Invoke(CurrentBinder);
         }
 
         public async void ReplayCurrent()
