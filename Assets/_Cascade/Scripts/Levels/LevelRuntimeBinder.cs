@@ -22,6 +22,9 @@ namespace Cascade.Levels
         public Transform simulationInterestRoot;
         public Transform resultAnchor;
 
+        [Tooltip("Optional explicit object for the cinematic camera to follow during simulation. If empty, CameraDirector will choose a suitable moving body automatically.")]
+        public Transform cinematicFollowTarget;
+
         public Rigidbody[] GetRuntimeRigidbodies()
         {
             return machineRoot != null
