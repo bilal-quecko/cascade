@@ -5,7 +5,7 @@ namespace Cascade.Core
     public sealed class PlaceableTool : MonoBehaviour
     {
         [SerializeField] private RestrictedFreePlacementZone placementZone;
-        [SerializeField] private Vector3 overlapHalfExtents = new(1.5f, 0.25f, 1f);
+        [SerializeField] private Vector3 overlapHalfExtents = new(1.5f, 0.2f, 2f);
         [SerializeField] private LayerMask blockingMask = ~0;
 
         private Vector3 _initialPosition;
@@ -68,7 +68,8 @@ namespace Cascade.Core
             foreach (Collider hit in hits)
             {
                 if (hit == null || hit.transform.IsChildOf(transform) || transform.IsChildOf(hit.transform)) continue;
-                if (placementZone != null && hit.transform.IsChildOf(placementZone.transform)) continue;
+                if (hit.gameObject.name == "Ground") continue;
+                if (placementZone != null && (hit.transform == placementZone.transform || hit.transform.IsChildOf(placementZone.transform))) continue;
                 return false;
             }
             return true;
